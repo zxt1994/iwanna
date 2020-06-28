@@ -1,9 +1,7 @@
-import sys
-
 import pygame
 
-from settings import Settings
-from kid import Kid
+from source.settings import Settings
+from source.componets.kid import Kid
 import game_functions as gf
 
 def run_game():
@@ -14,13 +12,14 @@ def run_game():
 
     pygame.display.set_caption("I Wanna")
 
-    kid=Kid(screen)
+    kid=Kid(screen, iwan_settings)
 
     #开始游戏的主循环
     while True:
 
         #监视键盘和鼠标事件
         gf.check_events(kid)
+        kid.update()
         gf.update_screen(iwan_settings,screen,kid)
 
 run_game()
