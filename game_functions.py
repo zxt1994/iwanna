@@ -25,6 +25,8 @@ def check_keydown_events(event, iwan_settings, screen, kid, bullets):
         #new_bullet = Bullet(iwan_settings, screen, kid)
         #bullets.add(new_bullet)
         fire_bullet(iwan_settings, screen, kid, bullets)
+    elif event.key == pygame.K_q:
+        sys.exit()
 
 def fire_bullet(iwan_settings, screen, kid, bullets):
     """如果还没有达到限制，就发射一颗子弹"""
