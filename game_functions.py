@@ -3,7 +3,7 @@ import sys
 import pygame
 
 from source.componets.bullet import Bullet
-
+from source.componets.thorn import Thorn
 
 
 
@@ -59,13 +59,15 @@ def check_events(iwan_settings, screen, kid, bullets):
            check_keyup_event(event, iwan_settings, screen, kid, bullets)
 
 
-def update_screen(iwan_settings, screen, kid, bullets):
+def update_screen(iwan_settings, screen, kid, thorns, bullets):
     """更新屏幕上的图像，并切换到新屏幕"""
     # 每次循环时都重绘屏幕
     screen.fill(iwan_settings.bg_color)
     for bullets in bullets.sprites():
         bullets.draw_bullet()
     kid.bliteme()
+
+    thorns.draw(screen)
 
     # 让最近绘制的屏幕可见
     pygame.display.flip()
@@ -78,3 +80,20 @@ def update_bullets(bullets, rect):
         if bullet.rect.x >= rect.right:
             bullets.remove(bullet)
     print(len(bullets))
+
+def create_thorngroup(iwan_settings, screen, thorns):
+    """创建尖刺群"""
+    #创建一个尖刺，并计算一行可以容纳多少尖刺
+    #尖刺间的间距为尖刺的宽度
+    thorn = Thorn(iwan_settings, screen)
+    thorn_width = thorn.rect.width
+    available_space_x = iwan_settings.screen_width - 2 * thorn_width
+    number_thorns_x = int(available_space_x / (2 * thorn_width))
+
+    #创建第一行尖刺
+    for thorn_number in range(number_thorns_x):
+        #创建一个尖刺并将其加入当前行
+        thorn = Thorn(iwan_settings, screen)
+        thorn.x = thorn_width + 2 * thorn_width * thorn_number
+        thorn.rect.x = thorn.x
+        thorns.add(thorn)

@@ -9,7 +9,8 @@ class Thorn(Sprite):
         self.iwan_settings = iwan_settings
 
         #加载尖刺图像，设置其rect属性
-        self.image = pygame.image.load('D:/iwanna/images/thorn.png')
+        self.initimage = pygame.image.load('D:/iwanna/images/thorn.png')
+        self.image = pygame.transform.scale(self.initimage,(30, 30))
         self.rect = self.image.get_rect()
 
         #尖刺在左上角附近
