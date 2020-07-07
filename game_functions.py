@@ -81,19 +81,28 @@ def update_bullets(bullets, rect):
             bullets.remove(bullet)
     print(len(bullets))
 
-def create_thorngroup(iwan_settings, screen, thorns):
-    """创建尖刺群"""
-    #创建一个尖刺，并计算一行可以容纳多少尖刺
-    #尖刺间的间距为尖刺的宽度
-    thorn = Thorn(iwan_settings, screen)
-    thorn_width = thorn.rect.width
+
+
+def get_number_thorns_x(iwan_settings, thorn_width):
+    """计算每行可容纳哦多少个尖刺"""
     available_space_x = iwan_settings.screen_width - 2 * thorn_width
     number_thorns_x = int(available_space_x / (2 * thorn_width))
+    return number_thorns_x
 
-    #创建第一行尖刺
+def create_thorn(iwan_settings, screen, thorns, thorn_number):
+    """创建一个尖刺，并将其放在当前行"""
+    thorn = Thorn(iwan_settings, screen)
+    thorn_width = thorn.rect.width
+    thorn.x = thorn_width + 2 * thorn_width * thorn_number
+    thorn.rect.x = thorn.x
+    thorns.add(thorn)
+
+def create_thorngroup(iwan_settings, screen, thorns):
+    """创建尖刺群"""
+    # 创建一个尖刺，并计算一行可以容纳多少尖刺
+    # 尖刺间的间距为尖刺的宽度
+    thorn = Thorn(iwan_settings, screen)
+    number_thorns_x = get_number_thorns_x(iwan_settings, thorn.rect.width)
+    # 创建第一行尖刺
     for thorn_number in range(number_thorns_x):
-        #创建一个尖刺并将其加入当前行
-        thorn = Thorn(iwan_settings, screen)
-        thorn.x = thorn_width + 2 * thorn_width * thorn_number
-        thorn.rect.x = thorn.x
-        thorns.add(thorn)
+        create_thorn(iwan_settings, screen, thorns, thorn_number)
