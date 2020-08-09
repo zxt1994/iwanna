@@ -9,7 +9,7 @@ class Kid():
         self.iwan_settings=iwan_settings
         #加载kid图像并获取其外接矩形
 
-        self.initimage = pygame.image.load('D:/iwanna/images/kid.png')
+        self.initimage = pygame.image.load('./../images/kid.png')
         self.image = pygame.transform.scale(self.initimage,(30, 30))
 
         self.rect = self.image.get_rect()
@@ -50,3 +50,8 @@ class Kid():
     def bliteme(self):
         """在指定位置绘制kid"""
         self.screen.blit(self.image, self.rect)
+
+    def org_kid(self):
+        """让kid回到初始位置"""
+        self.x = self.screen_rect.left
+        self.bottom = self.screen_rect.bottom

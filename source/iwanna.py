@@ -4,6 +4,7 @@ from source.settings import Settings
 from source.componets.kid import Kid
 import game_functions as gf
 from pygame.sprite import Group
+from source.game_stats import GameStats
 from source.componets.thorn import Thorn
 
 def run_game():
@@ -21,6 +22,8 @@ def run_game():
     bullets = Group()
     rect = screen.get_rect()
 
+    #创建一个用于存储游戏统计信息的实例
+    stats = GameStats(iwan_settings)
 
     #创建一个尖刺群
     gf.create_thorngroup(iwan_settings, screen, thorns)
@@ -33,5 +36,6 @@ def run_game():
         kid.update()
         gf.update_bullets(bullets, rect)
         gf.update_screen(iwan_settings, screen, kid, thorns, bullets)
+        gf.update_thorns(iwan_settings, stats, screen, kid, thorns, bullets)
 
 run_game()

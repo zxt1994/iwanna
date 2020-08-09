@@ -4,7 +4,7 @@ import pygame
 
 from source.componets.bullet import Bullet
 from source.componets.thorn import Thorn
-
+from time import sleep
 
 
 def check_keydown_events(event, iwan_settings, screen, kid, bullets):
@@ -93,7 +93,7 @@ def create_thorn(iwan_settings, screen, thorns, thorn_number):
     """创建一个尖刺，并将其放在当前行"""
     thorn = Thorn(iwan_settings, screen)
     thorn_width = thorn.rect.width
-    thorn.x = thorn_width + 2 * thorn_width * thorn_number
+    thorn.x = thorn_width + 2.15 * thorn_width * thorn_number
     thorn.rect.x = thorn.x
     thorns.add(thorn)
 
@@ -106,3 +106,25 @@ def create_thorngroup(iwan_settings, screen, thorns):
     # 创建第一行尖刺
     for thorn_number in range(number_thorns_x):
         create_thorn(iwan_settings, screen, thorns, thorn_number)
+
+def update_thorns(iwan_settings, stats, screen, kid, thorns, bullets):
+    # 检测kid和尖刺之间的碰撞
+    if pygame.sprite.spritecollideany(kid, thorns):
+        kid_hit(iwan_settings, stats, screen, kid, thorns, bullets)
+        print("kid is die!!!!")
+
+def kid_hit(iwan_settings, stats, screen, kid, thorns, bullets):
+    """响应被尖刺碰到的kid"""
+    #将dienum加1
+    stats.kid_die += 1
+
+    #清空尖刺列表和子弹列表
+    thorns.empty()
+    bullets.empty()
+
+    #创建一群新的尖刺，并让kid回到初始位置
+    create_thorngroup(iwan_settings, screen, thorns)
+    kid.org_kid()
+
+    #暂停
+    sleep(0.5)

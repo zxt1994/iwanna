@@ -9,6 +9,7 @@ class Settings():
         self.bg_color = (230, 230, 230)
         #kid的设置
         self.kid_speed_factor = 0.25
+        self.kid_dienum = 0
 
         #子弹设置
         self.bullet_speed_factor = 0.7
